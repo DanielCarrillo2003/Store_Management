@@ -28,7 +28,7 @@
 /public/assets
 
 yarn-error.log
-/config/credentials.yml
+/config/credentials.yml.enc
 
 
 
