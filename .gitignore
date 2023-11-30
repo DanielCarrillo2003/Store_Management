@@ -27,6 +27,12 @@
 
 /public/assets
 
+yarn-error.log
+/config/credentials.yml
+
+
+
+
 /config/storeproductsstorage-firebase-adminsdk-rqvgp-7fdd7200fd.json
 # Ignore master key for decrypting credentials and more.
 /config/master.key
