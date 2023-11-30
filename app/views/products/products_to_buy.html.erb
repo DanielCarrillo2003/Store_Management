@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row" style="margin-top: 50px; margin-bottom: 50px">
+        <div class="col-9">
+            <h1>Todos los productos disponibles</h1>
+        </div>
+        <div class="col-3 d-flex justify-content-end">
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#cartModal" style="background-color: #f2643d; color: white;">
+                Mi carrito <i class="fa-solid fa-cart-shopping"></i>
+            </button>
+        </div>
+    </div>
+    <%= render 'modal_carrito' %>
+    <%= render 'product_card' %>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.add-to-cart-form').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#cartModalBody').html(response);
+                    Swal.fire({
+                    position: 'bottom-end',
+                    icon: 'success',
+                    title: 'Producto agregado al carrito',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    toast: true 
+                    });
+                }
+            });
+        });
+    });
+</script>

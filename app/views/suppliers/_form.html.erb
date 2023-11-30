@@ -1,0 +1,10 @@
+<%= form_with(model: @lot, url: lots_path, method: :post, local: true) do |f| %>
+    <%= f.hidden_field :product_id, value: @product.id %>
+    <%= f.hidden_field :supplier_id, value: @product.supplier.id %>
+    <%= f.label :expiration_date, 'Fecha de Caducidad' %>
+    <%= f.date_field :expiration_date, class: 'form-control' %>
+    <%= f.label :amount, 'Cantidad' %>
+    <%= f.number_field :amount, class: 'form-control' %>
+
+    <%= f.submit 'Registrar Lote', class: 'btn btn-primary', id: 'submit-lote', style: 'display: none;' %>
+<% end %>

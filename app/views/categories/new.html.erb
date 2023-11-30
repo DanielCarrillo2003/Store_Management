@@ -1,0 +1,14 @@
+<h1>Agregar categoria</h1>
+<div style='width: 50%'>
+    <%= form_with(model: @category, url: categories_path, method: :post, local: true) do |f| %>
+        <div class="mb-3">
+            <%= f.label :name, "Nombre:", class: "form-label", style: "color: #3f3844;" %>
+            <%= f.text_field :name, class: "form-control"  %>
+        </div>
+        <div class="mb-3">
+            <%= f.label :description, "Descripcion:", class: "form-label", style: "color: #3f3844;" %>
+            <%= f.text_area :description, class: "form-control" %>
+        </div>
+        <div class="text-center"><%= f.submit "Agregar categoria" %></div>
+    <% end %>
+</div>

@@ -1,0 +1,31 @@
+<h1>Proveedores</h1>
+<%= link_to "Registrar proveedor", new_supplier_path, class: "nav-link" %>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">-</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%@suppliers.each do |supplier|%>
+            <tr>
+                <th scope="row"><%= supplier.id %></th>
+                <td><%= supplier.name %></td>
+                <td><%= supplier.firstname %></td>
+                <td><%= supplier.phone_number %></td>
+                <td><%= supplier.enterprise %></td>
+                <td>
+                    <%= link_to raw('Eliminar'), supplier_path(supplier), data: { turbo_method: :delete }, class: 'btn btn-danger', style: 'margin: 0px;' %>
+                    <%= link_to "Editar", edit_supplier_path(supplier.id) %>
+                    <%= link_to "Ver productos", see_supplier_products_path(supplier) %>
+                </td>
+            </tr>
+        <%end%>
+    </tbody>
+</table>

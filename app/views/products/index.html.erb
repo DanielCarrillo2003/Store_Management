@@ -1,0 +1,37 @@
+<h1>Productos</h1>
+<%= form_tag personal_products_path, method: :get, id: 'search-form' do %>
+  <div class="input-group mb-3 mt-4">
+    <%= text_field_tag :search, params[:search], placeholder: "Buscar productos", class: "form-control", style: "border-top-left-radius: 20px; border-bottom-left-radius: 20px"%>
+    <%= submit_tag "Buscar", class: "btn btn-light", style: "background-color: #ee7784; border-color: #ee7784"%>
+  </div>
+<% end %>
+<%= link_to "Agregar producto", personal_products_new_path, class: "nav-link" %>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Ubicacion</th>
+            <th scope="col">Precio</th>
+            <th scope="col">-</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%@products.each do |product|%>
+            <tr>
+                <th scope="row"><%= product.id %></th>
+                <td><%= product.name %></td>
+                <td><%= product.description %></td>
+                <td><%= product.location %></td>
+                <td><%= product.price %></td>
+                <td>
+                    <%= form_with(model: product, url: delete_product_path(product.id), method: :delete, local: true, html: { class: 'delete-alertbox' }) do |f| %>
+                      <%= f.submit 'Eliminar', class: 'btn btn-primary' %>
+                    <% end %>
+                    <%= link_to "Editar", edit_product_path(product.id) %>
+                </td>
+            </tr>
+        <%end%>
+    </tbody>
+</table>

@@ -1,0 +1,75 @@
+<h1>Productos del proveedor</h1>
+
+
+<% if @products.any? %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cantidad a la venta</th>
+                <th scope="col">Cantidad almacen</th>
+                <th scope="col">-</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%@products.each do |product|%>
+                <tr>
+                    <th scope="row"><%= product.id %></th>
+                    <td><%= product.name %></td>
+                    <td><%= product.on_sale %></td>
+                    <td><%= product.in_stock %></td>
+                    <td>
+                        <button class="btn btn-primary" onclick="openSwal(<%= product.id %>)">
+                            <div id="spinner" style="display:none;">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            <p id='text' style='margin-bottom: 0px;'>Registrar Lote</p> 
+                        </button>
+                    </td>
+                </tr>
+            <%end%>
+        </tbody>
+    </table>
+<%else%>
+    <h2>No existen productos con este proveedor</h2>
+<% end %>
+
+<script>
+function openSwal(productId) {
+  console.log(productId);
+  var currentUrl = window.location.href;
+  var newUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + 'product_id=' + productId;
+  $('#spinner').show();
+  $('#text').hide();
+  $.ajax({
+    url: newUrl,
+    method: 'GET',
+    success: function(response) {
+      $('#spinner').hide();
+      $('#text').show();
+
+      Swal.fire({
+        title: 'Registrar Lote',
+        html: response,
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Registrar',
+        confirmButtonAriaLabel: 'Registrar',
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i> Cancelar',
+        cancelButtonAriaLabel: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById('submit-lote').click();
+        }
+      });
+    },
+    error: function() {
+      $('#spinner').hide();
+    }
+  });
+}
+</script>

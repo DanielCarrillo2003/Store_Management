@@ -1,0 +1,33 @@
+<h1>Categorias</h1>
+<%= link_to "Agregar categoria", new_category_path, class: "nav-link" %>
+<div class="container">
+    
+    <% if @categories.any? %>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">-</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%@categories.each do |category|%>
+                    <tr>
+                        <th scope="row"><%= category.id %></th>
+                        <td><%= category.name %></td>
+                        <td><%= category.description %></td>
+                        <td>
+                            <%= link_to raw('Eliminar'), category_path(category), data: { turbo_method: :delete }, class: 'btn btn-danger', style: 'margin: 0px;' %>
+                            <%= link_to "Editar", edit_category_path(category.id) %>
+                        </td>
+                    </tr>
+                <%end%>
+            </tbody>
+        </table>
+    <%else%>
+        <h2>Sin categorias por mostrar</h2>
+    <% end %>
+
+</div>

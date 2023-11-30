@@ -1,0 +1,83 @@
+.image-container {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#LoginTitle {
+  font-size: 2.5rem;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: #f2643d;
+}
+#imageCol {
+  padding: 0;
+}
+.cover-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#LoginContainer {
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#LoginBox {
+  border-radius: 10px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  width: 95%;
+}
+
+#loginBox .col {
+  padding: 0;
+}
+
+.loginForm {
+  padding: 50px;
+}
+
+@media only screen and(max-width: 768px) {
+  .loginForm {
+    padding: 30px;
+  }
+}
+
+.loginForm form {
+  text-align: start !important;
+}
+@media only screen and(max-width: 765px) {
+  #imageCol {
+    display: none;
+  }
+}
+
+.buton-area input {
+  background-color: #f2643d;
+  padding: 10px 30px;
+  border-radius: 5px;
+  margin: 20px;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  color: white;
+  border: none;
+}
+
+.buton-area input:hover {
+  background-color: #f2643d !important;
+  padding: 10px 40px !important;
+}

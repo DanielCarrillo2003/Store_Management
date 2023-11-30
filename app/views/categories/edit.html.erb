@@ -1,0 +1,15 @@
+<h1>Editar categoria</h1>
+
+<%= form_with(model: @category, url: category_path(@category), method: :patch) do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "Nombre:", class: "form-label", style: "color: #3f3844;" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :description, "Descripción:", class: "form-label", style: "color: #3f3844;" %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+  <div class="text-center">
+    <%= f.submit "Actualizar categoria" %>
+  </div>
+<% end %>

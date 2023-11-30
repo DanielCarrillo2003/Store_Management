@@ -1,0 +1,146 @@
+<style>
+.details {
+    border: 1.5px solid grey;
+    color: #212121;
+    width: 100%;
+    height: auto;
+    box-shadow: 0px 0px 10px #212121;
+}
+
+.cart {
+    background-color: #F2A73D;
+    color: white;
+    margin-top: 10px;
+    font-size: 12px;
+    width: 100%;
+    height: 39px;
+    padding-top: 9px;
+}
+
+.card-show {
+    width: fit-content;
+}
+
+.card-body-show {
+    width: fit-content;
+}
+
+.btn-show {
+    border-radius: 5px;
+    letter-spacing: 2px; 
+    font-weight: 700
+}
+
+.btn-show:hover{
+    border: 1px solid black;
+}
+
+.img-thumbnail-show {
+    border: none;
+}
+
+.card-show {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .2);
+    border-radius: 5px;
+    padding-bottom: 10px;
+}
+
+
+
+.input-wrapper {
+    width: 150px;
+    height: 30px;
+    display: flex;
+    border-radius: 50%;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    padding: 10px;
+    text-align: center;
+}
+
+.input-wrapper * {
+    border: none;
+    width: 50px;
+    flex: 1;
+}
+
+.input-wrapper .input-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: gray;
+}
+
+.input-wrapper .input-button:first-child {
+    border-radius: 50% 0 0 50%;
+}
+
+.input-wrapper .input-button:last-child {
+    border-radius: 0 50% 50% 0;
+}
+</style>
+<% @categories.each do |category| %>
+    <div class="row" style="margin-bottom: 50px">
+        <h2><%= category.name %></h2>
+        <% if category.products.any? %>
+            <%category.products.each do |product|%>
+
+                <div class="card card-show mx-auto col-md-3 col-10 mt-5" style="width: 18rem; margin: 10px">
+                    <%= image_tag product.image, class: "card-img-top mx-auto img-thumbnail img-thumbnail-show", width: "auto", height: "auto"%>
+                    <div class="card-body card-body-show text-center mx-auto" style="margin:0 !important; width: 100%">
+                        <div class='cvp'>
+                            <% if product.on_sale != nil %>
+
+                                <h5 class="card-title font-weight-bold"><%= product.name %></h5>
+                                <p class="card-text"><%= product.price %></p>
+                                <%# <a href="#" class="btn details px-auto">view details</a><br /> %>
+                                <%= form_with(url: cart_items_path, local: true, class: 'add-to-cart-form') do |form| %>
+                                    <%= hidden_field_tag :product_id, product.id %>
+                                    <div style="width:100%; display: flex; justify-content: center; align-items: center">
+                                        <span class="input-wrapper">
+                                            <span id="decrement" style="user-select: none; background: white; border: .5px solid black; color: red; font-size: 1.7rem" class="input-button">-</span>
+                                            <%= number_field_tag :quantity, 1, min: 1, id: "quantity-bro" %>
+                                            <span id="increment" style="user-select: none; background: white; border: 1px solid black; color: green; font-size: 1.5rem" class="input-button">+</span>
+                                        </span>
+                                    </div>
+                                    
+
+                                    <%= submit_tag 'Agregar al carrito', class: 'btn btn-show  cart px-auto', id:'agregar-carrito' %>
+                                <% end %>
+                            <% else %>
+                                <p>Sin existencia</p>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+
+            <%end%>
+        <% else %>
+            <h3>Sin productos en esta categoria</h3>
+        <% end %>
+    </div>
+<% end %>
+
+<script>
+    const incrementButton = document.querySelector("#increment");
+    const decrementButton = document.querySelector("#decrement");
+    const quantityInput = document.querySelector("#quantity-bro");
+
+    incrementButton.addEventListener("click", () => {
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+    });
+    decrementButton.addEventListener("click", () => {
+    quantityInput.value = parseInt(quantityInput.value) - 1;
+    });
+</script>

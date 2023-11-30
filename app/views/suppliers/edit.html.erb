@@ -1,0 +1,23 @@
+<h1>Editar proveedor</h1>
+
+<%= form_with(model: @supplier, url: supplier_path(@supplier), method: :patch) do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "Nombre:", class: "form-label", style: "color: #3f3844;" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :firstname, "Apellido:", class: "form-label", style: "color: #3f3844;" %>
+    <%= f.text_field :firstname, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :phone_number, "Telefono:", class: "form-label", style: "color: #3f3844;" %>
+    <%= f.text_field :phone_number, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :enterprise, "Empresa:", class: "form-label", style: "color: #3f3844;" %>
+    <%= f.text_field :enterprise, class: "form-control", step: 'any' %>
+  </div>
+  <div class="text-center">
+    <%= f.submit "Actualizar proveedor" %>
+  </div>
+<% end %>
