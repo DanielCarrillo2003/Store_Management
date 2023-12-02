@@ -14,24 +14,38 @@
 </div>
 <script>
     $(document).ready(function() {
-        $('.add-to-cart-form').submit(function(e) {
+    let totalAfterAdding = document.querySelector('#totalCompra')
+    function updateTotal() {
+        $.ajax({
+        url: '/products/total',
+        method: 'GET',
+        success: function(totalResponse) {
+            var total = totalResponse.total;
+            console.log(total)
+            totalAfterAdding.innerText = 'Total: $' + total;
+        }
+        });
+    }
+    updateTotal();
+    $('.add-to-cart-form').submit(function(e) {
             e.preventDefault();
 
             $.ajax({
-                url: $(this).attr('action'),
-                method: $(this).attr('method'),
-                data: $(this).serialize(),
-                success: function(response) {
-                    $('#cartModalBody').html(response);
-                    Swal.fire({
-                    position: 'bottom-end',
-                    icon: 'success',
-                    title: 'Producto agregado al carrito',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    toast: true 
-                    });
-                }
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: $(this).serialize(),
+            success: function(response) {
+                $('#cartModalBody').html(response);
+                updateTotal();
+                Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: 'Producto agregado al carrito',
+                showConfirmButton: false,
+                timer: 1500,
+                toast: true 
+                });
+            }
             });
         });
     });

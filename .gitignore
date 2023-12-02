@@ -32,6 +32,8 @@ yarn-error.log
 
 
 
+/backup_repo
+
 
 /config/storeproductsstorage-firebase-adminsdk-rqvgp-7fdd7200fd.json
 # Ignore master key for decrypting credentials and more.

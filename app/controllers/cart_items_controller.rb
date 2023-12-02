@@ -20,10 +20,12 @@ class CartItemsController < ApplicationController
 
     def update
         @cart_item = current_user.cart_items.find(params[:id])
-        if @cart_item.update(quantity: params[:quantity])
+        if @cart_item.update(cart_item_params)
+            puts(cart_item_params)
             flash.now[:notice] = 'Cantidad de producto actualizada'
             render partial: 'cart_content'
         else
+            puts(cart_item_params)
             flash.now[:alert] = 'No se pudo actualizar la cantidad del producto'
             render partial: 'cart_content'
         end
@@ -34,6 +36,12 @@ class CartItemsController < ApplicationController
         @cart_item.destroy
         flash.now[:notice] = 'Producto eliminado del carrito'
         render partial: 'cart_content'
+    end
+
+    private 
+
+    def cart_item_params
+        params.require(:cart_item).permit(:product_id, :user_id, :quantity)
     end
     
 end

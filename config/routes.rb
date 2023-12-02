@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'personal/products/edit/:id', to: 'products#edit', as: 'edit_product'
   patch 'product/:id', to: 'products#update', as: 'update_product'
   get 'products', to: 'products#products_to_buy', as: 'available_products'
+  get 'products/total', to: 'products#total'
 
   #RUTAS DE CATEGORIAS
   resources :categories

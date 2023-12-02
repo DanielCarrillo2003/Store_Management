@@ -58,9 +58,21 @@ class ProductsController < ApplicationController
         @categories = Category.all
         @products = Product.all
         @cart_item = CartItem.new
+        @cart_items = current_user.cart_items
+        @cart_total = calculate_total(@cart_items)
+    end
+
+    def total
+        @cart_items = current_user.cart_items
+        @total = calculate_total(@cart_items)
+        render json: { total: @total }
     end
 
     private
+
+    def calculate_total(cart_items)
+        cart_items.sum { |item| item.product.price * item.quantity }
+    end
 
     def product_params
         params.require(:product).permit(:name, :description, :location, :price, :category_id, :supplier_id, :image)
