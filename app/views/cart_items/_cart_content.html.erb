@@ -38,8 +38,8 @@
             method: 'GET',
             success: function(totalResponse) {
                 var total = totalResponse.total;
-                console.log(total)
                 totalAfterDeleting.innerText = 'Total: $' + total;
+                $('#totalAmount').val(total);
             }
             });
         }

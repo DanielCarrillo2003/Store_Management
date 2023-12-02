@@ -10,8 +10,54 @@
         </div>
         <div class="modal-footer">
             <h4 id="totalCompra"></h4>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <%= form_with(model: @cart_item, url: checkout_cart_items_path, method: :post, local: true, html: { class: 'buy-cart-form' }) do |f| %>
+                <%= f.hidden_field :user_id, value: current_user.id %>
+                <%= f.hidden_field :total_amount, value: 0, id: "totalAmount"%>
+                <%= f.button type: 'submit', class: 'btn btn-primary buy-button', data: { bs_toggle: 'tooltip', bs_placement: 'left', title: 'Realizar Compra' } do %>
+                    Realizar Compra
+                <% end %>
+            <% end %>
         </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+
+        function getTotal() {
+            $.ajax({
+                url: '/products/total',
+                method: 'GET',
+                success: function(totalResponse) {
+                    var total = totalResponse.total;
+                    $('#totalAmount').val(total);
+                    console.log(total)
+                }
+            });
+        }
+        getTotal()
+        $('.buy-cart-form').submit(function(e) {
+            let finalTotal = document.querySelector('#totalCompra')
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    location.reload();
+                    // $(window).on('load', function() {
+                    //     Swal.fire({
+                    //         icon: 'success',
+                    //         title: '¡Compra realizada!',
+                    //         text: 'Tu compra ha sido registrada.',
+                    //     });
+                    // });
+                },
+                error: function(error) {
+                    console.error('Error al realizar la compra:', error);
+                }
+            });
+        });
+    });
+</script>

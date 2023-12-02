@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_26_204259) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_02_094323) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -112,6 +112,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_26_204259) do
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
   end
 
+  create_table "sale_items", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "sale_id", null: false
+    t.index ["product_id"], name: "index_sale_items_on_product_id"
+    t.index ["sale_id"], name: "index_sale_items_on_sale_id"
+    t.index ["user_id"], name: "index_sale_items_on_user_id"
+  end
+
+  create_table "sales", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "date_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "total_amount"
+    t.index ["user_id"], name: "index_sales_on_user_id"
+  end
+
   create_table "suppliers", force: :cascade do |t|
     t.string "name"
     t.string "firstname"
@@ -142,4 +163,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_26_204259) do
   add_foreign_key "lots", "products"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "suppliers"
+  add_foreign_key "sale_items", "products"
+  add_foreign_key "sale_items", "sales"
+  add_foreign_key "sale_items", "users"
+  add_foreign_key "sales", "users"
 end

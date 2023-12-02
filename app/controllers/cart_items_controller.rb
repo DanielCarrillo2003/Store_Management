@@ -38,10 +38,37 @@ class CartItemsController < ApplicationController
         render partial: 'cart_content'
     end
 
+    def checkout
+        sale = Sale.new(sale_params.merge(date_time: Time.current))
+        if sale.save
+            current_user.cart_items.each do |cart_item|
+                product = cart_item.product
+                sale_item = SaleItem.create(user: current_user, product: product, quantity: cart_item.quantity, sale: sale)
+                if sale_item.persisted?
+                    cart_item.destroy
+                else
+                    flash.now[:notice] = 'Ocurrió un error al crear SaleItem'
+                    puts('Ocurrió un error al crear SaleItem')
+                    render partial: 'cart_content', status: :unprocessable_entity
+                    return
+                end
+            end
+            flash[:notice] = 'Compra realizada'
+            render partial: 'cart_content'
+        else
+            flash.now[:notice] = 'Ocurrió un error con la compra'
+            render partial: 'cart_content', status: :unprocessable_entity
+        end
+    end
+
     private 
 
     def cart_item_params
         params.require(:cart_item).permit(:product_id, :user_id, :quantity)
+    end
+
+    def sale_params 
+        params.require(:cart_item).permit(:user_id, :total_amount)
     end
     
 end

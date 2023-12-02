@@ -11,7 +11,8 @@ class Product < ApplicationRecord
     has_one_attached :image
     has_many :lots
     has_many :cart_items, dependent: :destroy
-
+    has_many :sales_items
+    has_many :sales, through: :sales_items
     def self.ransackable_attributes(auth_object = nil)
         ["category_id", "created_at", "description", "id", "location", "name", "price", "supplier_id", "updated_at", "image"]
     end

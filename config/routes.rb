@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'products', to: 'products#products_to_buy', as: 'available_products'
   get 'products/total', to: 'products#total'
 
+
   #RUTAS DE CATEGORIAS
   resources :categories
 
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
   get '/:id/products', to: 'suppliers#get_products', as: 'see_supplier_products'
 
   #RUTAS PAL CARRITO
-  resources :cart_items, only: [:create, :update, :destroy]
-  
+  resources :cart_items, only: [:create, :update, :destroy] do
+    post 'checkout', on: :collection
+  end
 end

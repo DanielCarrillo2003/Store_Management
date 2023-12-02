@@ -21,8 +21,8 @@
         method: 'GET',
         success: function(totalResponse) {
             var total = totalResponse.total;
-            console.log(total)
             totalAfterAdding.innerText = 'Total: $' + total;
+            $('#totalAmount').val(total);
         }
         });
     }
