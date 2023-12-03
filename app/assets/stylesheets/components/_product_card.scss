@@ -1,9 +1,14 @@
 .details {
-  border: 1.5px solid grey;
-  color: #212121;
+  background-color: #a0e8b7;
+  color: #26251c;
+  margin-top: 5px;
   width: 100%;
   height: auto;
-  box-shadow: 0px 0px 10px #212121;
+  font-size: 12px;
+}
+
+.details:hover {
+  border: 1px solid black;
 }
 
 .cart {
@@ -13,7 +18,6 @@
   font-size: 12px;
   width: 100%;
   height: 39px;
-  padding-top: 9px;
 }
 
 .card-show {

@@ -45,14 +45,15 @@
                 type: $(this).attr('method'),
                 data: $(this).serialize(),
                 success: function(response) {
+                    Swal.fire({
+                        position: 'bottom-end',
+                        icon: 'success',
+                        title: 'Tu compra sera procesada, consulta los detalles en "Mis compras"',
+                        showConfirmButton: false,
+                        timer: 6000,
+                        toast: true 
+                    }); 
                     location.reload();
-                    // $(window).on('load', function() {
-                    //     Swal.fire({
-                    //         icon: 'success',
-                    //         title: '¡Compra realizada!',
-                    //         text: 'Tu compra ha sido registrada.',
-                    //     });
-                    // });
                 },
                 error: function(error) {
                     console.error('Error al realizar la compra:', error);

@@ -27,7 +27,7 @@
                 <td><%= product.price %></td>
                 <td>
                     <%= form_with(model: product, url: delete_product_path(product.id), method: :delete, local: true, html: { class: 'delete-alertbox' }) do |f| %>
-                      <%= f.submit 'Eliminar', class: 'btn btn-primary' %>
+                        <%= f.submit 'Eliminar', class: 'btn btn-primary' %>
                     <% end %>
                     <%= link_to "Editar", edit_product_path(product.id) %>
                 </td>

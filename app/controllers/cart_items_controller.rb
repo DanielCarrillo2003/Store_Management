@@ -45,6 +45,7 @@ class CartItemsController < ApplicationController
                 product = cart_item.product
                 sale_item = SaleItem.create(user: current_user, product: product, quantity: cart_item.quantity, sale: sale)
                 if sale_item.persisted?
+                    product.update(on_sale: product.on_sale - cart_item.quantity)
                     cart_item.destroy
                 else
                     flash.now[:notice] = 'Ocurrió un error al crear SaleItem'

@@ -1,0 +1,16 @@
+<style>
+#saleDetailsContainer{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+</style>
+<div class="container" id="saleDetailsContainer">
+    <h1>Detalles de la compra</h1>
+    <h3 class="mt-5 mb-5">Productos: </h3>
+    <% @sale.products.each do |product| %>
+        <div>        
+            <h5> <%= product.name %> x <% sale_item = SaleItem.find_by(product_id: product.id) %> <%= sale_item.quantity %>, total: <% total = sale_item.quantity * product.price%> <%= total %> </h5> 
+        </div>
+    <% end %>
+    <p style="font-size: 2rem; margin: 50px 0">Total de la compra: <%= @total %></p>
+</div>

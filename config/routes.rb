@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get 'products', to: 'products#products_to_buy', as: 'available_products'
   get 'products/total', to: 'products#total'
 
+  #RUTAS DE VENTAS
+  resources :sales, only: [:index]
+  get 'sale/:id', to: "sales#sale_details", as: 'see_sale_details'
 
   #RUTAS DE CATEGORIAS
   resources :categories

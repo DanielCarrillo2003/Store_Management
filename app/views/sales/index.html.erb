@@ -1,0 +1,30 @@
+<style>
+#mySalesContainer{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+</style>
+<div class="container" id="mySalesContainer">
+    <h1 style="margin-bottom: 50px">Mis compras</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Total de la compra</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <%@sales.each do |sale|%>
+                    <tr>
+                        <th scope="row"> <%= sale.id %></th>
+                        <td> <%= sale.date_time %> </td>
+                        <td> <%= sale.total_amount %> </td>
+                        <td><%= link_to 'Ver detalles', see_sale_details_path(sale), class: 'btn btn-primary' %></td>
+                    </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
