@@ -21,7 +21,8 @@ class ProductsController < ApplicationController
             flash[:notice] = 'El producto ha sido agregado con exito'
             redirect_to personal_products_path
         else 
-            flash.now[:notice] = "El producto no se pudo agregar, intente de nuevo"
+            flash.now[:error] = "Hubo un error al intentar registrar un producto, verifique que los datos ingresados sean correctos."
+            render :new, status: :unprocessable_entity
         end
     end
 
@@ -47,10 +48,11 @@ class ProductsController < ApplicationController
         puts(@product)
         puts(params[:id])
         if @product.destroy
-            flash[:notice] = 'El producto ha sido eliminado con exito'
+            flash[:notice] = 'El producto ha sido eliminado con éxito'
             redirect_to personal_products_path
         else
             flash.now[:notice] = "El producto no se pudo eliminar, intente de nuevo"
+            puts @product.errors.full_messages
         end
     end
 

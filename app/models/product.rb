@@ -8,10 +8,17 @@ class Product < ApplicationRecord
     using: {
         tsearch: {prefix: true, any_word: true }
     }
+    validates :name, presence: true, uniqueness: {case_sensitive: true}, length: {minimum:10, maximum: 40}
     has_one_attached :image
-    has_many :lots
+    validates :image, presence: true
+    validates :location, presence: true
+    validates :description, presence: true, length: {minimum:40, maximum:250}
+    validates :price, presence: true
+    validates :category_id, presence: true
+    validates :supplier_id, presence: true
+    has_many :lots, dependent: :destroy
     has_many :cart_items, dependent: :destroy
-    has_many :sales_items
+    has_many :sale_items, class_name: 'SaleItem', dependent: :destroy
     has_many :sales, through: :sales_items
     def self.ransackable_attributes(auth_object = nil)
         ["category_id", "created_at", "description", "id", "location", "name", "price", "supplier_id", "updated_at", "image"]
