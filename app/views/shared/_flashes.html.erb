@@ -1,21 +1,21 @@
 <% if notice %>
   <div class="alert alert-success alert-dismissible fade show m-1" role="alert">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    <%= notice %>
+    <p style="font-weight: bold; font-size: 1.3rem"><%= notice %></p>
   </div>
 <% end %>
 
 <% if alert %>
   <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    <%= alert %>
+      <p style="font-weight: bold; font-size: 1.3rem"><%= alert %></p>
   </div>
 <% end %>
 
 <% if flash.now[:error] %>
   <div class="alert alert-danger alert-dismissible fade show m-1" role="alert">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    <%= flash.now[:error] %>
+    <p style="font-weight: bold; font-size: 1.3rem"><%= flash.now[:error] %></p>
   </div>
 <% end %>
 

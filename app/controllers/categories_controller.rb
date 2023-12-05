@@ -1,6 +1,10 @@
 class CategoriesController < ApplicationController
     def index 
-        @categories = Category.all
+        if params[:search].present?
+            @categories = Category.search_by_fields(params[:search])
+        else
+            @categories = Category.all
+        end
     end
 
     def new
@@ -33,11 +37,13 @@ class CategoriesController < ApplicationController
 
     def destroy
         @category = Category.find(params[:id])
-        if @category.destroy
+        begin
+            @category.destroy
             flash[:notice] = 'La categoria ha sido eliminada con exito'
+        rescue ActiveRecord::InvalidForeignKey
+            flash[:alert] = 'La categoría no puede ser eliminada ya que tiene productos relacionados.'
+        ensure
             redirect_to categories_path
-        else
-            flash.now[:notice] = "La categoria no se pudo eliminar, intente de nuevo"
         end
     end
 

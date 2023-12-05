@@ -9,7 +9,8 @@ class LotsController < ApplicationController
             flash[:notice] = 'Se ha registrado un lote con exito'
             redirect_to see_supplier_products_path(@supplier.id)
         else 
-            flash.now[:notice] = "Ha ocurrido un error al registrar el lote, intente de nuevo"
+            flash[:alert] = 'Hubo un problema al registrar el lote'
+            redirect_to see_supplier_products_path(@supplier.id)
         end
     end
 

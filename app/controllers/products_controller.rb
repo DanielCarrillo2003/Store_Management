@@ -45,14 +45,11 @@ class ProductsController < ApplicationController
 
     def destroy
         @product = Product.find(params[:id])
-        puts(@product)
-        puts(params[:id])
         if @product.destroy
             flash[:notice] = 'El producto ha sido eliminado con éxito'
             redirect_to personal_products_path
         else
             flash.now[:notice] = "El producto no se pudo eliminar, intente de nuevo"
-            puts @product.errors.full_messages
         end
     end
 

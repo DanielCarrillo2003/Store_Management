@@ -1,15 +1,37 @@
-<h1>Productos del proveedor</h1>
+<style>
+    th{
+        background-color: #3f3844 !important; 
+        color: white !important;
+        border-right: 1px solid white;
+    }
+</style>
 
+<div class="container">
+  <div style="margin: 50px 0">
+      <div class="row" style="display: flex; justify-content: center; align-items: center">
+          <div class="col-3">
+              <h1>Productos del proveedor</h1>
+          </div>
+          <div class="col-6">
+              <%= form_tag see_supplier_products_path(@supplier), method: :get, id: 'search-form' do %>
+                  <div class="input-group">
+                      <%= text_field_tag :search, params[:search], placeholder: "Buscar productos del proveedor", class: "form-control"%>
+                      <%= submit_tag "Buscar", class: "btn btn-light", style: "background-color: #3f3844; border-color: #3f3844; color: white"%>
+                  </div>
+              <% end %>
+          </div>
+      </div>
+  </div>
 
-<% if @products.any? %>
-    <table class="table">
+  <% if @products.any? %>
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Cantidad a la venta</th>
                 <th scope="col">Cantidad almacen</th>
-                <th scope="col">-</th>
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -17,50 +39,69 @@
                 <tr>
                     <th scope="row"><%= product.id %></th>
                     <td><%= product.name %></td>
-                    <td><%= product.on_sale %></td>
-                    <td><%= product.in_stock %></td>
+                    
+                    <% if product.on_sale %>
+                      <td><%= product.on_sale %></td>
+                    <% else %>
+                      <td><p style="color: red">Sin existencia</p></td>
+                    <% end %>
+
+                    <% if product.in_stock %>
+                      <td><%= product.in_stock %></td>
+                    <% else %>
+                      <td><p style="color: red">Sin existencia</p></td>
+                    <% end %>
+
                     <td>
-                        <button class="btn btn-primary" onclick="openSwal(<%= product.id %>)">
-                            <div id="spinner" style="display:none;">
+                      <div class="row text-center">
+                        <div class="col-12">
+                          <button class="btn btn-primary" onclick="openSwal(this, <%= product.id %>)">
+                            <div class="spinner-container" style="display:none;">
                                 <div class="spinner-border" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+                                    <span class="visually-hidden">Cargando...</span>
                                 </div>
                             </div>
-                            <p id='text' style='margin-bottom: 0px;'>Registrar Lote</p> 
-                        </button>
+                            <p class="text-container" style='margin-bottom: 0px;'>Registrar Lote</p> 
+                          </button>
+                        </div>
+                      </div>
                     </td>
                 </tr>
             <%end%>
         </tbody>
     </table>
-<%else%>
-    <h2>No existen productos con este proveedor</h2>
-<% end %>
+  <%else%>
+      <div style="width: 100%; display: flex; justify-content: center; align-items: center">
+        <p style="font-size: 2rem;">No existe ningún resultado que coincida con la busqueda</p>
+      </div>
+  <% end %>
+</div>
+
 
 <script>
-function openSwal(productId) {
-  console.log(productId);
+function openSwal(button, productId) {
   var currentUrl = window.location.href;
   var newUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + 'product_id=' + productId;
-  $('#spinner').show();
-  $('#text').hide();
+  var spinnerContainer = $(button).find('.spinner-container');
+  var textContainer = $(button).find('.text-container');
+  spinnerContainer.show();
+  textContainer.hide();
   $.ajax({
     url: newUrl,
     method: 'GET',
     success: function(response) {
-      $('#spinner').hide();
-      $('#text').show();
-
+      spinnerContainer.hide();
+      textContainer.show();
       Swal.fire({
         title: 'Registrar Lote',
         html: response,
         showCloseButton: true,
         showCancelButton: true,
         focusConfirm: false,
-        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Registrar',
-        confirmButtonAriaLabel: 'Registrar',
-        cancelButtonText: '<i class="fa fa-thumbs-down"></i> Cancelar',
-        cancelButtonAriaLabel: 'Cancelar'
+        confirmButtonText: 'Registrar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#0d6efd',
+        cancelButtonColor: '#B6B6B6',
       }).then((result) => {
         if (result.isConfirmed) {
           document.getElementById('submit-lote').click();
@@ -68,7 +109,7 @@ function openSwal(productId) {
       });
     },
     error: function() {
-      $('#spinner').hide();
+      spinnerContainer.hide();
     }
   });
 }

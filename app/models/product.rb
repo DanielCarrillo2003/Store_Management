@@ -3,7 +3,7 @@ class Product < ApplicationRecord
     belongs_to :category 
     belongs_to :supplier
     pg_search_scope :search_by_fields,
-    against: [:name, :location, :price],
+    against: [:name, :location, :price, :on_sale],
     associated_against: { category: [:name] },
     using: {
         tsearch: {prefix: true, any_word: true }
@@ -12,7 +12,7 @@ class Product < ApplicationRecord
     has_one_attached :image
     validates :image, presence: true
     validates :location, presence: true
-    validates :description, presence: true, length: {minimum:40, maximum:250}
+    validates :description, presence: true, length: {minimum:40, maximum:500}
     validates :price, presence: true
     validates :category_id, presence: true
     validates :supplier_id, presence: true

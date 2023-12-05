@@ -1,14 +1,50 @@
-<h1>Agregar categoria</h1>
-<div style='width: 50%'>
-    <%= form_with(model: @category, url: categories_path, method: :post, local: true) do |f| %>
-        <div class="mb-3">
-            <%= f.label :name, "Nombre:", class: "form-label", style: "color: #3f3844;" %>
-            <%= f.text_field :name, class: "form-control"  %>
+<style>
+    .form-image{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    
+    .form-container{
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-col{
+        padding: 0;
+    }
+</style>
+
+<div class="container form-container">
+    <div class="row" style="margin: 50px; border: 1px solid black; border-radius: 10px; height: auto;">
+        <div class="col-4 form-col">
+            <div class="image-container">
+                <%= image_tag("refris.jpg", class: "form-image")%>
+            </div>
         </div>
-        <div class="mb-3">
-            <%= f.label :description, "Descripcion:", class: "form-label", style: "color: #3f3844;" %>
-            <%= f.text_area :description, class: "form-control" %>
+        <div class="col-8 form-col">
+            <div style="padding: 30px"> 
+                <h2 class="mb-4">Registrar categoría</h2>
+                <div >
+                    <%= form_with(model: @category, url: categories_path, method: :post, local: true, html: { class: 'row g-3' }) do |f| %>
+                        <div class="col-12">
+                            <%= f.label :name, "Nombre:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "nameValidation" %>
+                            <%= f.text_field :name, class: "form-control", id: "nameValidation", required: true   %>
+                        </div>
+                        <div class="col-12">
+                            <%= f.label :description, "Descripción:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "descValidation" %>
+                            <%= f.text_area :description, class: "form-control", id: "descValidation", required: true %>
+                        </div>
+                        <div class="col-12">
+                            <%= f.submit "Agregar categoría", class: "btn btn-primary" %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
         </div>
-        <div class="text-center"><%= f.submit "Agregar categoria" %></div>
-    <% end %>
+    </div>
 </div>

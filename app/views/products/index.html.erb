@@ -1,40 +1,121 @@
+<style>
+    .name-column{
+        max-width: 110px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .swal2-warning{
+        color: red !important;
+        border-color: red !important;
+    }
+
+    th{
+        background-color: #3f3844 !important; 
+        color: white !important;
+        border-right: 1px solid white;
+    }
+</style>
+
+
+
 <div class="container">
     <div style="margin: 50px 0">
-    <h1>Productos</h1>
-        <%= link_to "Agregar producto", personal_products_new_path, class: "btn btn-success" %>
-        <%= form_tag personal_products_path, method: :get, id: 'search-form' do %>
-        <div class="input-group mb-3 mt-4">
-            <%= text_field_tag :search, params[:search], placeholder: "Buscar productos", class: "form-control", style: "border-top-left-radius: 20px; border-bottom-left-radius: 20px"%>
-            <%= submit_tag "Buscar", class: "btn btn-light", style: "background-color: #ee7784; border-color: #ee7784"%>
+        <div class="row" style="display: flex; justify-content: center; align-items: center">
+            <div class="col-2">
+                <h1>Productos</h1>
+            </div>
+            <div class="col-7">
+                <%= form_tag personal_products_path, method: :get, id: 'search-form' do %>
+                    <div class="input-group">
+                        <%= text_field_tag :search, params[:search], placeholder: "Buscar productos", class: "form-control"%>
+                        <%= submit_tag "Buscar", class: "btn btn-light", style: "background-color: #3f3844; border-color: #3f3844; color: white"%>
+                    </div>
+                <% end %>
+            </div>
+            <div class="col-3 d-flex justify-content-end">
+                <%= link_to "Agregar producto", personal_products_new_path, class: "btn btn-primary" %>
+            </div>
+        </div>
+    </div>
+    
+    <% if @products.any? %>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Ubicación</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">En venta</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%@products.each do |product|%>
+                    <tr>
+                        <th scope="row"><%= product.id %></th>
+                        <td class="name-column"><%= product.name %></td>
+                        <td ><%= product.location %></td>
+                        <td><%= product.category.name %></td>
+                        
+                        <% if product.on_sale %>
+                            <td><%= product.on_sale %> unidades</td>
+                        <% else %> 
+                            <td><span style="color: red">Pedido pendiente</span></td>
+                        <% end %>
+                        
+                        <td>$<%= product.price %>0 mxn</td>
+                        <% id = product.id %>
+                        <td>
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <%= form_with(model: product, url: delete_product_path(product.id), method: :delete, local: true, html: { class: 'delete-form' }) do |form| %>
+                                        <%= form.submit 'Eliminar', class: 'delete-product btn btn-danger', style: "width: 100%" %>
+                                    <% end %>
+                                </div>
+                                <div class="col-4">
+                                    <%= link_to "Editar", edit_product_path(product.id), class: "btn btn-secondary", style: "width: 100%" %>
+                                </div>
+                                <div class="col-4">
+                                    <%= link_to "Ver más", edit_product_path(product.id), class: "btn btn-success", style: "width: 100%" %>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <%end%>
+            </tbody>
+        </table>
+    <% else %>
+        <div style="width: 100%; display: flex; justify-content: center; align-items: center">
+            <p style="font-size: 2rem;">No existe ningún resultado que coincida con la busqueda</p>
         </div>
     <% end %>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Descripcion</th>
-                <th scope="col">Ubicacion</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <%@products.each do |product|%>
-                <tr>
-                    <th scope="row"><%= product.id %></th>
-                    <td><%= product.name %></td>
-                    <td><%= product.description %></td>
-                    <td><%= product.location %></td>
-                    <td><%= product.price %></td>
-                    <% id = product.id %>
-                    <td>
-                        <%= link_to 'Delete', delete_product_path(product.id), class: 'delete-product btn btn-danger', data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
-                        <%= link_to "Editar", edit_product_path(product.id), class: "btn btn-warning" %>
-                    </td>
-                </tr>
-            <%end%>
-        </tbody>
-    </table>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('.delete-form').submit(function(event) {
+            event.preventDefault();
+
+            const form = $(this);
+
+            Swal.fire({
+                title: '¿Estas seguro de querer realizar esta acción?',
+                text: '¡La eliminación de un producto no puede ser deshecha!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#B6B6B6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar',
+                cancelButtonText: "No, cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.unbind('submit').submit();
+                }
+            });
+        });
+    });
+</script>

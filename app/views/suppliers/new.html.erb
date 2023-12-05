@@ -1,22 +1,55 @@
-<h1>Registrar proveedor</h1>
-<div style='width: 50%'>
-    <%= form_with(model: @supplier, url: suppliers_path, method: :post, local: true) do |f| %>
-        <div class="mb-3">
-            <%= f.label :name, "Nombre:", class: "form-label", style: "color: #3f3844;" %>
-            <%= f.text_field :name, class: "form-control"  %>
+<style>
+    .form-image{
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    
+    .form-container{
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-col{
+        padding: 0;
+    }
+</style>
+<div class="container form-container">
+    <div class="row" style="margin: 50px; border: 1px solid black; border-radius: 10px; height: 400px">
+        <div class="col-4 form-col">
+            <div class="image-container">
+                <%= image_tag("proveedor.jpg", class: "form-image")%>
+            </div>
         </div>
-        <div class="mb-3">
-            <%= f.label :firstname, "Apellido:", class: "form-label", style: "color: #3f3844;" %>
-            <%= f.text_field :firstname, class: "form-control" %>
+        <div class="col-8 form-col">
+            <div style="padding: 30px">
+                <h2 class="mb-4">Registrar proveedor</h2>
+                <%= form_with(model: @supplier, url: suppliers_path, method: :post, local: true, html: { class: 'row g-3' }) do |f| %>
+                    <div class="col-md-6">
+                        <%= f.label :name, "Nombre:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "nameValidation" %>
+                        <%= f.text_field :name, class: "form-control", id: "nameValidation", required: true  %>
+                    </div>
+                    <div class="col-md-6">
+                        <%= f.label :firstname, "Apellido:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "apellidoValidation" %>
+                        <%= f.text_field :firstname, class: "form-control", id: "apellidoValidation", required: true %>
+                    </div>
+                    <div class="col-md-6">
+                        <%= f.label :phone_number, "Telefono:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "phoneValidation" %>
+                        <%= f.text_field :phone_number, class: "form-control", id: "phoneValidation", required: true  %>
+                    </div>
+                    <div class="col-md-6">
+                        <%= f.label :enterprise, "Empresa:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "enterpriseValidation" %>
+                        <%= f.text_field :enterprise, class: "form-control", id: "enterpriseValidation", required: true  %>
+                    </div>
+                    <div class="col-12">
+                        <%= f.submit "Registrar proveedor", class: "btn btn-primary" %>
+                    </div>
+                <% end %>
+            </div>
         </div>
-        <div class="mb-3">
-            <%= f.label :phone_number, "Telefono:", class: "form-label", style: "color: #3f3844;" %>
-            <%= f.text_field :phone_number, class: "form-control"  %>
-        </div>
-        <div class="mb-3">
-            <%= f.label :enterprise, "Empresa:", class: "form-label", style: "color: #3f3844;" %>
-            <%= f.text_field :enterprise, class: "form-control", step: 'any'  %>
-        </div>
-        <div class="text-center"><%= f.submit "Registrar proveedor" %></div>
-    <% end %>
+    </div>
 </div>

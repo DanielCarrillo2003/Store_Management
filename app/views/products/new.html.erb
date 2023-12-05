@@ -1,37 +1,84 @@
-<h1>Agregar producto</h1>
-<div style='width: 50%'>
-    <%= form_with(model: @product, url: product_path, method: :post, local: true) do |f| %>
-        <div class="mb-3">
-            <%= f.label :name, "Nombre:", class: "form-label", style: "color: #3f3844;", for: "nameValidation" %>
-            <em>(Minimo 10 caracteres, maximo 40)</em><br>
-            <%= f.text_field :name, class: "form-control", id: "nameValidation", required: true %>
-        </div>
-        <div class="mb-3">
-            <%= f.label :description, "Descripcion:", class: "form-label", style: "color: #3f3844;", for: "descValidation" %>
-            <em>(Minimo 40 caracteres, maximo 250)</em><br>
-            <%= f.text_area :description, class: "form-control", id: "descValidation", required: true %>
-        </div>
-        <div class="field">
-            <%= f.label :image, "Imagen:", for: "imgValidation" %>
-            <%= f.file_field :image, class: "form-control", id: "imgValidation", required: true %>
-        </div>
-        <div class="mb-3">
-            <%= f.label :location, "Ubicacion:", class: "form-label", style: "color: #3f3844;", for: "locationValidation" %>
-            <%= f.text_field :location, class: "form-control", id: "locationValidation", required: true  %>
-        </div>
-        <div class="mb-3">
-            <%= f.label :price, "Precio:", class: "form-label", style: "color: #3f3844;", for: "priceValidation" %>
-            <%= f.number_field :price, class: "form-control", step: 'any', id: "priceValidation", required: true  %>
-        </div>
-        <div class="field">
-            <%= f.label :category_id, "Categoría:", for: "categoryValidation" %>
-            <%= f.collection_select :category_id, @categories, :id, :name, { prompt: 'Selecciona una categoría' } , class: "form-select", id: "categoryValidation", required: true %>
-        </div>
+<style>
+    .form-image{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    
+    .form-container{
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        <div class="field">
-            <%= f.label :supplier_id, "Proveedor:", for: "supplierValidation" %>
-            <%= f.collection_select :supplier_id, @suppliers, :id,  ->(supplier) { "#{supplier.enterprise} - #{supplier.name}" }, { prompt: 'Selecciona un proveedor' }, class: "form-select", id: "supplierValidation", required: true %>
+    .form-col{
+        padding: 0;
+    }
+</style>
+
+<div class="container form-container">
+    <div class="row" style="margin: 50px; border: 1px solid black; border-radius: 10px">
+        <div class="col-4 form-col">
+            <div class="image-container">
+                <%= image_tag("looking-food.jpg", class: "form-image")%>
+            </div>
         </div>
-        <div class="text-center"><%= f.submit "Agregar producto" %></div>
-    <% end %>
+        <div class="col-8 form-col">
+            <div style="padding: 30px"> 
+                <h2 class="mb-4">Registrar producto</h2>
+                <%= form_with(model: @product, url: product_path, method: :post, local: true, html: { class: 'row g-3' }) do |f| %>
+                    <div class="col-md-8">
+                        <%= f.label :name, "Nombre:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "nameValidation" %>
+                        <em>(Minimo 10 caracteres, maximo 40)</em><br>
+                        <%= f.text_field :name, class: "form-control", id: "nameValidation", required: true %>
+                    </div>
+                    <div class="col-md-4">
+                        <%= f.label :price, "Precio:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "priceValidation" %>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" style="height: 38px">$</span>
+                            <%= f.number_field :price, class: "form-control", step: 'any', id: "priceValidation", required: true, style: "height: 38px"  %>
+                            <span class="input-group-text" style="height: 38px">.00</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom: 15px">
+                        <%= f.label :category_id, "Categoría:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "categoryValidation" %>
+                        <%= f.collection_select :category_id, @categories, :id, :name, { prompt: 'Selecciona una categoría' } , class: "form-select", id: "categoryValidation", required: true %>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom: 15px">
+                        <%= f.label :supplier_id, "Proveedor:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "supplierValidation" %>
+                        <%= f.collection_select :supplier_id, @suppliers, :id,  ->(supplier) { "#{supplier.enterprise} - #{supplier.name}" }, { prompt: 'Selecciona un proveedor' }, class: "form-select", id: "supplierValidation", required: true %>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom: 15px">
+                        <%= f.label :image, "Imagen:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "imgValidation" %>
+                        <%= f.file_field :image, class: "form-control", id: "imgValidation", required: true %>
+                    </div>
+                    <div class="col-md-6">
+                        <%= f.label :location, "Ubicación:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "locationValidation" %>
+                        <%= f.select :location, options_for_select([
+                            "Pasillo de frituras, primer anaquel",
+                            "Pasillo de frituras, segundo anaquel",
+                            "Pasillo de bebidas, primera repisa",
+                            "Pasillo de bebidas, segunda repisa",
+                            "Sección de lácteos, estante superior",
+                            "Sección de lácteos, estante inferior",
+                            "Sección de frutas y verduras",
+                            "Pasillo de productos frescos",
+                            "Área de congelados"
+                        ], f.object.location), {}, class: "form-control", id: "locationValidation", required: true %>
+                    </div>
+                    <div class="mb-3">
+                        <%= f.label :description, "Descripción:", class: "form-label", style: "color: #3f3844; font-weight: bold", for: "descValidation" %>
+                        <em>(Minimo 40 caracteres, maximo 250)</em><br>
+                        <%= f.text_area :description, class: "form-control", id: "descValidation", required: true %>
+                    </div>
+                    <div class="col-12">
+                        <%= f.submit "Agregar producto", class: "btn btn-primary" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
 </div>

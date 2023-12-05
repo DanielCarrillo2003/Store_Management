@@ -4,6 +4,9 @@ class Lot < ApplicationRecord
     after_create :update_product
     after_destroy :update_product
 
+    validates :expiration_date, presence: true
+    validates :amount, presence: true
+
     private 
 
     def update_product 
