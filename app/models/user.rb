@@ -8,8 +8,8 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: {case_sensitive: true}
   validate :password_complexity
   has_many :cart_items, dependent: :destroy
-  has_many :sales
-  has_many :sale_items
+  has_many :sales, dependent: :destroy
+  has_many :sale_items, dependent: :destroy
   def self.ransackable_attributes(auth_object = nil)
     super & ['created_at', 'email', 'id', 'personal', 'remember_created_at', 'reset_password_sent_at', 'reset_password_token', 'updated_at', 'username']
   end

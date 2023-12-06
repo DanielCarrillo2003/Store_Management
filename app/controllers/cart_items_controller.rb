@@ -54,6 +54,7 @@ class CartItemsController < ApplicationController
                     return
                 end
             end
+            SalesMailer.send_receipt(current_user.username, current_user.email).deliver_now
             flash[:notice] = 'Compra realizada'
             render partial: 'cart_content'
         else

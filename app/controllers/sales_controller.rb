@@ -1,6 +1,6 @@
 class SalesController < ApplicationController
     def index
-        @sales = Sale.all
+        @sales = current_user.sales
     end
 
     def sale_details

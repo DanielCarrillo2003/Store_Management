@@ -36,6 +36,10 @@ gem "importmap-rails"
 
 gem 'pg_search'
 
+gem 'delayed_job_active_record'
+
+gem 'sendgrid-ruby'
+
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
