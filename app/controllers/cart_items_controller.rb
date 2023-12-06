@@ -38,12 +38,19 @@ class CartItemsController < ApplicationController
         render partial: 'cart_content'
     end
 
+    attr_accessor :receive_receipt
+
+
     def checkout
+        receive_receipt = params[:cart_item][:receive_receipt] == '1'
         sale = Sale.new(sale_params.merge(date_time: Time.current))
+        products_hash = {}
         if sale.save
+            total_to_pay = sale.total_amount
             current_user.cart_items.each do |cart_item|
                 product = cart_item.product
                 sale_item = SaleItem.create(user: current_user, product: product, quantity: cart_item.quantity, sale: sale)
+                products_hash[product.name] = "#{sale_item.quantity} x #{product.price} = #{product.price * sale_item.quantity}"
                 if sale_item.persisted?
                     product.update(on_sale: product.on_sale - cart_item.quantity)
                     cart_item.destroy
@@ -54,7 +61,11 @@ class CartItemsController < ApplicationController
                     return
                 end
             end
-            SalesMailer.send_receipt(current_user.username, current_user.email).deliver_now
+
+            if receive_receipt
+                SalesMailer.send_receipt(current_user.username, current_user.email, products_hash, total_to_pay).deliver_now
+            end
+
             flash[:notice] = 'Compra realizada'
             render partial: 'cart_content'
         else
