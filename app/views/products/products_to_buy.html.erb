@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row" style="margin-top: 50px; margin-bottom: 50px">
+    <div class="row" style="margin-top: 50px; margin-bottom: 20px">
         <div class="col-9">
             <h1>Todos los productos disponibles</h1>
         </div>
@@ -9,9 +9,32 @@
             </button>
         </div>
     </div>
+    <div class="row">
+        <div class="col-6">
+            <%= form_tag available_products_path, method: :get, id: 'search-form' do %>
+                <div class="input-group">
+                    <%= text_field_tag :search, params[:search], placeholder: "Buscar por nombre, categoria, precio, unidades o fecha de vencimiento", class: "form-control"%>
+                    <%= submit_tag "Buscar", class: "btn btn-light", style: "background-color: #3f3844; border-color: #3f3844; color: white"%>
+                </div>
+            <% end %>
+            <div class="mt-3">
+                <div>
+                    <p>Todas las categorias</p>
+                    <% @categories.each do |category| %>
+                        <% if category.products.any? %>
+                            <span class="badge text-bg-secondary">
+                                <%= link_to category.name, available_products_path(search: params[:search], category: category.name), class: "text-white" %>
+                            </span>
+                        <% end %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
     <%= render 'modal_carrito' %>
     <%= render 'product_card' %>
 </div>
+
 <script>
     $(document).ready(function() {
     let totalAfterAdding = document.querySelector('#totalCompra')

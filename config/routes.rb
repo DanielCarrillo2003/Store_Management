@@ -6,13 +6,14 @@ Rails.application.routes.draw do
 
   #RUTAS DE PRODUCTOS
   get 'personal/products', to: 'products#index'
-  get 'personal/products/new', to: 'products#new'
   post 'product', to: 'products#create'
   delete 'product/:id', to: 'products#destroy', as: 'delete_product'
-  get 'personal/products/edit/:id', to: 'products#edit', as: 'edit_product'
   patch 'product/:id', to: 'products#update', as: 'update_product'
+  get 'personal/products/new', to: 'products#new'
+  get 'personal/products/edit/:id', to: 'products#edit', as: 'edit_product'
   get 'products', to: 'products#products_to_buy', as: 'available_products'
   get 'products/total', to: 'products#total'
+  get 'buy/product-details/:id', to: 'products#show_product_details_to_buyer', as: 'see_product_details_for_buyer'
 
   #RUTAS DE VENTAS
   resources :sales, only: [:index]

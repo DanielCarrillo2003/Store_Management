@@ -41,7 +41,6 @@ class ProductsController < ApplicationController
             flash.now[:notice] = "Error al actualizar el producto, intente de nuevo"
         end
     end 
- 
 
     def destroy
         @product = Product.find(params[:id])
@@ -53,9 +52,28 @@ class ProductsController < ApplicationController
         end
     end
 
+    def show_product_details_to_buyer 
+        @product = Product.find(params[:id])
+        puts(@product.category.name )
+        @cart_item = CartItem.new
+    end
+    
+
     def products_to_buy 
+        if params[:search].present?
+            @products = Product.search_by_fields(params[:search])
+            if params[:category].present?
+                @category = Category.find_by(name: params[:category])
+                @products = @products.where(category: @category)
+            end
+        else
+            @products = Product.all
+            if params[:category].present?
+                @category = Category.find_by(name: params[:category])
+                @products = @products.where(category: @category)
+            end
+        end
         @categories = Category.all
-        @products = Product.all
         @cart_item = CartItem.new
         @cart_items = current_user.cart_items
         @cart_total = calculate_total(@cart_items)

@@ -1,7 +1,9 @@
 <p>
-    Hola <%= @name %>, vengo de tu mailer
+    <h1>Productos:</h1>
+
     <% @products_hash.each do |nombre, total| %>
         <p><strong><%= nombre %> llevas <%= total %> </p>
     <% end %>
-    <h4>Total <%= @total %></h4>
+    <br>
+    <h4 style="font-size: 2rem">Total de la compra: <%= @total %></h4>
 </p>

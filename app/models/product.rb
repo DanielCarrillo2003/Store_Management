@@ -3,11 +3,14 @@ class Product < ApplicationRecord
     belongs_to :category 
     belongs_to :supplier
     pg_search_scope :search_by_fields,
-    against: [:name, :location, :price, :on_sale],
-    associated_against: { category: [:name] },
-    using: {
-        tsearch: {prefix: true, any_word: true }
-    }
+                against: [:name, :location, :price, :on_sale, :expiration_date],
+                associated_against: { category: [:name] },
+                using: {
+                tsearch: {prefix: true,
+                    any_word: true,       
+                    normalization: 2    },
+                dmetaphone: { any_word: true }
+                }
     validates :name, presence: true, uniqueness: {case_sensitive: true}, length: {minimum:10, maximum: 40}
     has_one_attached :image
     validates :image, presence: true

@@ -3,6 +3,6 @@ class SalesMailer < ApplicationMailer
     @name = user_name
     @products_hash = products_hash
     @total = total_to_pay
-    mail to: user_email, subject: 'Hola desde sales_maler.rb'
+    mail to: user_email, subject: 'Detalles de tu compra'
   end
 end

@@ -9,20 +9,26 @@
             <%= render 'cart_items/cart_content' %>
         </div>
         <div class="modal-footer">
-            <h4 id="totalCompra"></h4>
-            <%= form_with(model: @cart_item, url: checkout_cart_items_path, method: :post, local: true, html: { class: 'buy-cart-form' }) do |f| %>
-                <%= f.hidden_field :user_id, value: current_user.id %>
-                <%= f.hidden_field :total_amount, value: 0, id: "totalAmount"%>
-
-                <div class="form-check">
-                    <%= f.check_box :receive_receipt, class: 'form-check-input' %>
-                    <%= f.label :receive_receipt, 'Quiero recibir mi recibo por correo', class: 'form-check-label' %>
+            <div class="row">
+                <div class="col-3">
+                    <h4 id="totalCompra" style="font-size: 1.5rem; font-weight: bold"></h4>
                 </div>
-                
-                <%= f.button type: 'submit', class: 'btn btn-primary buy-button', data: { bs_toggle: 'tooltip', bs_placement: 'left', title: 'Realizar Compra' } do %>
-                    Realizar Compra
-                <% end %>
-            <% end %>
+                <div class="col-9">
+                    <%= form_with(model: @cart_item, url: checkout_cart_items_path, method: :post, local: true, html: { class: 'buy-cart-form' }) do |f| %>
+                        <%= f.hidden_field :user_id, value: current_user.id %>
+                        <%= f.hidden_field :total_amount, value: 0, id: "totalAmount"%>
+                        <div class="form-check" style="display: flex; align-items: center; justify-content: end">
+                            <%= f.check_box :receive_receipt, class: 'form-check-input' %>
+                            <%= f.label :receive_receipt, 'Quiero recibir mi recibo por correo', class: 'form-check-label' %>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: end">
+                            <%= f.button type: 'submit', class: 'btn btn-primary buy-button', data: { bs_toggle: 'tooltip', bs_placement: 'left', title: 'Realizar Compra' } do %>
+                                Realizar Compra
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
         </div>
         </div>
     </div>
