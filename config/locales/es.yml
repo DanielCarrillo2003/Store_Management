@@ -3,6 +3,8 @@ es:
     messages:
       not_saved: "No se pudo guardar el registro"
   date:
+    formats:
+      custom_format: "%A, %d de %B del %Y"
     month_names:
       [
         ~,
@@ -21,9 +23,6 @@ es:
       ]
     abbr_month_names:
       [~, Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic]
-  time:
-    formats:
-      long: "%d de %B de %Y %H:%M:%S"
   activerecord:
     errors:
       models:

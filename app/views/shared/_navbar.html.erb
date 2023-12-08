@@ -36,8 +36,11 @@
                 <%= link_to "Proveedores", suppliers_path, class: "nav-link" %>
               </li> 
               <li class="nav-item" >
-                <a class="nav-link" href="#">Historial</a>
-              </li> 
+                <%= link_to "Movimientos de productos", get_products_movements_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item" >
+                <a class="nav-link" href="#">Rotaciones</a>
+              </li>  
             <%else%>
               <li class="nav-item" >
                 <%= link_to "Productos", available_products_path, class: "nav-link" %>

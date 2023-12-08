@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_07_015605) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_07_224534) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "plpgsql"
@@ -109,6 +109,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_07_015605) do
     t.datetime "updated_at", null: false
     t.integer "amount"
     t.index ["product_id"], name: "index_lots_on_product_id"
+  end
+
+  create_table "movements", force: :cascade do |t|
+    t.string "product_name"
+    t.integer "quantity_affected"
+    t.string "movement"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "day"
+    t.string "month"
+    t.string "year"
   end
 
   create_table "products", force: :cascade do |t|

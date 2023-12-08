@@ -80,10 +80,10 @@
 
 <script>
 function openSwal(button, productId) {
-  var currentUrl = window.location.href;
-  var newUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + 'product_id=' + productId;
-  var spinnerContainer = $(button).find('.spinner-container');
-  var textContainer = $(button).find('.text-container');
+  let currentUrl = window.location.href;
+  let newUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + 'product_id=' + productId;
+  let spinnerContainer = $(button).find('.spinner-container');
+  let textContainer = $(button).find('.text-container');
   spinnerContainer.show();
   textContainer.hide();
   $.ajax({

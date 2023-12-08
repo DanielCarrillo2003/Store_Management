@@ -26,8 +26,9 @@ module EcommerceAndStorage
     config.after_initialize do
       config.action_view.logger = nil
     end
-    config.i18n.default_locale = :es
 
+    config.i18n.default_locale = :es
+    
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

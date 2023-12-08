@@ -48,6 +48,16 @@ class SuppliersController < ApplicationController
             render html: render_to_string(partial: 'form', locals: { lot: @lot, product: @product }), layout: false
         end
     end
+
+    def get_movements
+        @movements = if params[:search].present?
+            Movement.search_by_fields(params[:search])
+        else
+            Movement.all
+        end
+        @movements = @movements.where("year = ?", params[:year]) if params[:year].present?
+    end
+    
     
 
 

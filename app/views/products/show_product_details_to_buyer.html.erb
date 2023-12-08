@@ -34,16 +34,21 @@
                             </div>
                         </div>
                     </div>
-                    <%= form_with(url: cart_items_path, local: true, class: 'add-to-cart-form') do |form| %>
-                        <%= hidden_field_tag :product_id, @product.id %>
-                        <div style="width:100%; display: flex; justify-content: center; align-items: center">
-                            <span class="input-wrapper">
-                                <span style="user-select: none; background: white; border: .5px solid black; color: red; font-size: 1.7rem" class="input-button decrement">-</span>
-                                    <%= number_field_tag :quantity, 1, min: 1,class: "quantity", id: "quantity-bro" %>
-                                <span style="user-select: none; background: white; border: 1px solid black; color: green; font-size: 1.5rem" class="increment input-button">+</span>
-                            </span>
-                        </div>
-                        <%= submit_tag 'Agregar al carrito', class: 'btn btn-show  cart px-auto', id:'agregar-carrito', style: "font-size: 1.2rem" %>
+                    
+                    <% if @product.on_sale == 0  %>
+                        <h3 class="text-center" style="color:red">Por el momento no puedes agregar este producto a tu carrito</h3>
+                    <% else %>
+                        <%= form_with(url: cart_items_path, local: true, class: 'add-to-cart-form') do |form| %>
+                            <%= hidden_field_tag :product_id, @product.id %>
+                            <div style="width:100%; display: flex; justify-content: center; align-items: center">
+                                <span class="input-wrapper">
+                                    <span style="user-select: none; background: white; border: .5px solid black; color: red; font-size: 1.7rem" class="input-button decrement">-</span>
+                                        <%= number_field_tag :quantity, 1, min: 1,class: "quantity", id: "quantity-bro" %>
+                                    <span style="user-select: none; background: white; border: 1px solid black; color: green; font-size: 1.5rem" class="increment input-button">+</span>
+                                </span>
+                            </div>
+                            <%= submit_tag 'Agregar al carrito', class: 'btn btn-show  cart px-auto', id:'agregar-carrito', style: "font-size: 1.2rem" %>
+                        <% end %>
                     <% end %>
             </div>
         </div>

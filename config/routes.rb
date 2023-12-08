@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   #RUTAS DE PROVEEDORES
   resources :suppliers
   get '/:id/products', to: 'suppliers#get_products', as: 'see_supplier_products'
+  get 'movements', to: 'suppliers#get_movements', as: 'get_products_movements'
 
   #RUTAS PAL CARRITO
   resources :cart_items, only: [:create, :update, :destroy] do

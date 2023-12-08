@@ -50,6 +50,7 @@ class CartItemsController < ApplicationController
             current_user.cart_items.each do |cart_item|
                 product = cart_item.product
                 sale_item = SaleItem.create(user: current_user, product: product, quantity: cart_item.quantity, sale: sale)
+                product.record_selling_movement(cart_item.quantity)
                 products_hash[product.name] = "#{sale_item.quantity} x #{product.price} = #{product.price * sale_item.quantity}"
                 if sale_item.persisted?
                     product.update(on_sale: product.on_sale - cart_item.quantity)
@@ -61,11 +62,9 @@ class CartItemsController < ApplicationController
                     return
                 end
             end
-
             if receive_receipt
                 SalesMailer.send_receipt(current_user.username, current_user.email, products_hash, total_to_pay).deliver_now
             end
-
             flash[:notice] = 'Compra realizada'
             render partial: 'cart_content'
         else

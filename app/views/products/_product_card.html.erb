@@ -9,19 +9,25 @@
                         <% if product.on_sale != nil %>
                             <div style="height: 86px">
                                 <div style="height: 56px"><h5 class="card-title font-weight-bold"><%= product.name %></h5></div>
-                                <p class="card-text">$ <%= product.price %>0 mxn</p>
+                                <p class="card-text"> <span style="font-weight: bold">$ <%= product.price %>0 mxn</span> | <span>Quedan <%= product.on_sale %> </span> </p>
                             </div>
-                            <%= form_with(url: cart_items_path, local: true, class: 'add-to-cart-form') do |form| %>
-                                <%= hidden_field_tag :product_id, product.id %>
-                                <div style="width:100%; display: flex; justify-content: center; align-items: center">
-                                    <span class="input-wrapper">
-                                        <span style="user-select: none; background: white; border: .5px solid black; color: red; font-size: 1.7rem" class="input-button decrement">-</span>
-                                            <%= number_field_tag :quantity, 1, min: 1,class: "quantity", id: "quantity-bro" %>
-                                        <span style="user-select: none; background: white; border: 1px solid black; color: green; font-size: 1.5rem" class="increment input-button">+</span>
-                                    </span>
-                                </div>
-                                <%= submit_tag 'Agregar al carrito', class: 'btn btn-show  cart px-auto', id:'agregar-carrito' %>
+                            
+                            <% if product.on_sale == 0 %>
+                                <p>Sin existencia</p>
+                            <% else %>
+                                <%= form_with(url: cart_items_path, local: true, class: 'add-to-cart-form') do |form| %>
+                                    <%= hidden_field_tag :product_id, product.id %>
+                                    <div style="width:100%; display: flex; justify-content: center; align-items: center">
+                                        <span class="input-wrapper">
+                                            <span style="user-select: none; background: white; border: .5px solid black; color: red; font-size: 1.7rem" class="input-button decrement">-</span>
+                                                <%= number_field_tag :quantity, 1, min: 1, max: product.on_sale, class: "quantity", id: "quantity-bro" %>
+                                            <span style="user-select: none; background: white; border: 1px solid black; color: green; font-size: 1.5rem" class="increment input-button">+</span>
+                                        </span>
+                                    </div>
+                                    <%= submit_tag 'Agregar al carrito', class: 'btn btn-show  cart px-auto', id:'agregar-carrito' %>
+                                <% end %>
                             <% end %>
+            
                             <%= link_to "Ver detalles", see_product_details_for_buyer_path(product.id), class: "btn details px-auto", style: "letter-spacing: 2px; font-weight: 700;" %>
                         <% else %>
                             <p>Sin existencia</p>
