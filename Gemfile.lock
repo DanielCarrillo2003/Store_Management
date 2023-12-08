@@ -96,6 +96,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     crass (1.0.6)
     date (3.3.4)
     debug (1.8.0)
@@ -116,6 +117,8 @@ GEM
     digest-crc (0.6.5)
       rake (>= 12.0.0, < 14.0.0)
     erubi (1.12.0)
+    et-orbi (1.2.7)
+      tzinfo
     faraday (2.7.11)
       base64
       faraday-net_http (>= 2.0, < 3.1)
@@ -125,6 +128,9 @@ GEM
     formtastic (5.0.0)
       actionpack (>= 6.0.0)
     formtastic_i18n (0.7.0)
+    fugit (1.9.0)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-apis-core (0.11.2)
@@ -243,6 +249,7 @@ GEM
     public_suffix (5.0.4)
     puma (5.6.7)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.7.3)
     rack (2.2.8)
     rack-test (2.1.0)
@@ -282,6 +289,10 @@ GEM
       i18n
     rdoc (6.6.0)
       psych (>= 4.0.0)
+    redis (5.0.8)
+      redis-client (>= 0.17.0)
+    redis-client (0.19.0)
+      connection_pool
     regexp_parser (2.8.2)
     reline (0.4.0)
       io-console (~> 0.5)
@@ -313,6 +324,15 @@ GEM
       websocket (~> 1.0)
     sendgrid-ruby (6.7.0)
       ruby_http_client (~> 3.4)
+    sidekiq (7.2.0)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.14.0)
+    sidekiq-cron (1.11.0)
+      fugit (~> 1.8)
+      globalid (>= 1.0.1)
+      sidekiq (>= 6)
     signet (0.18.0)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
@@ -380,9 +400,12 @@ DEPENDENCIES
   pg_search
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  redis
   sassc-rails
   selenium-webdriver
   sendgrid-ruby
+  sidekiq
+  sidekiq-cron
   simple_table_for
   sprockets-rails
   stimulus-rails

@@ -60,13 +60,11 @@
                         <td class="name-column"><%= product.name %></td>
                         <td ><%= product.location %></td>
                         <td><%= product.category.name %></td>
-                        
-                        <% if product.on_sale %>
+                        <% if product.on_sale && product.on_sale != 0 %>
                             <td><%= product.on_sale %> unidades</td>
                         <% else %> 
                             <td><span style="color: red">Pedido pendiente</span></td>
                         <% end %>
-                        
                         <td>$<%= product.price %>0 mxn</td>
                         <% id = product.id %>
                         <td>

@@ -1,0 +1,6 @@
+<h2>Products Expiring This Week</h2>
+<ul>
+    <% @products.each do |product| %>
+        <li><%= product.name %> - Expiration Date: <%= product.expiration_date %></li>
+    <% end %>
+</ul>

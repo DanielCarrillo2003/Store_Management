@@ -22,6 +22,10 @@ class Product < ApplicationRecord
         }
     }
 
+    scope :products_expiring_this_week, -> {
+        where('expiration_date >= ? AND expiration_date <= ?', Date.today, Date.today + 6.days)
+    }
+
     validates :name, presence: true, uniqueness: {case_sensitive: true}, length: {minimum:10, maximum: 40}
     validates :image, presence: true
     validates :location, presence: true
@@ -38,26 +42,18 @@ class Product < ApplicationRecord
         ["category_id", "created_at", "description", "id", "location", "name", "price", "supplier_id", "updated_at", "image"]
     end
 
-    def get_amount_on_sale
+    def update_inventory_information
         first_lot = lots.order(:expiration_date).first
         amount_on_sale = first_lot ? first_lot.amount : 0
-        update(on_sale: amount_on_sale)
-    end
-
-    def get_amount_in_stock 
-        amount_in_stock = lots.sum(:amount)
-        update(in_stock: amount_in_stock)
-    end
-
-    def get_lots_in_stock
-        quantity_lots = lots.count
-        update(lots_in_stock: quantity_lots)
-    end 
-
-    def get_expiration_date
-        first_lot = lots.order(:expiration_date).first
+        amount_in_stock = lots.sum(:amount) - amount_on_sale
+        quantity_lots = lots.count - 1
         lot_expiration_date = first_lot ? first_lot.expiration_date : nil
-        update(expiration_date: lot_expiration_date)
+        update(
+            on_sale: amount_on_sale,
+            in_stock: amount_in_stock,
+            lots_in_stock: quantity_lots,
+            expiration_date: lot_expiration_date
+        )
     end
 
     def record_selling_movement(quantity)

@@ -31,7 +31,7 @@ yarn-error.log
 .env
 /config/credentials.yml.enc
 
-
+redis-7.2.3
 
 /backup_repo
 

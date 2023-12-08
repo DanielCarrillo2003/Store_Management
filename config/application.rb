@@ -2,6 +2,10 @@ require_relative "boot"
 
 require "rails/all"
 
+require "active_model/railtie"
+
+require "active_job/railtie"
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -37,7 +41,7 @@ module EcommerceAndStorage
     config.time_zone = "America/Mexico_City"
     
     # config.eager_load_paths << Rails.root.join("extras")
-    config.active_job.queue_adapter = :delayed_job
+    config.active_job.queue_adapter = :sidekiq
     config.action_mailer.default_url_options = { host: 'example.com' }
 
     config.action_mailer.delivery_method = :smtp 

@@ -1,0 +1,6 @@
+# email_job:
+#   cron: "*/5 * * * * *"
+#   class: "WeeklyExpirationMailJob"
+email_job:
+  cron: "0 0 * * 1"
+  class: "WeeklyExpirationMailJob"
