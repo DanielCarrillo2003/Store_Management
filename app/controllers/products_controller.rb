@@ -1,9 +1,14 @@
 class ProductsController < ApplicationController
+    before_action :authenticate_user!
+    before_action :check_if_user_is_personal, only: [:index, :new, :create, :edit, :update, :destroy]
+    before_action :check_if_user_is_buyer, only: [:show_product_details_to_buyer, :products_to_buy, :total]
+
+
     def index 
         if params[:search].present?
-            @products = Product.search_by_fields(params[:search])
+            @pagy, @products = pagy(Product.search_by_fields(params[:search]), items: 10)
         else
-            @products = Product.all
+            @pagy, @products = pagy(Product.all, items: 10)
         end
     end
 
@@ -58,19 +63,18 @@ class ProductsController < ApplicationController
         @cart_item = CartItem.new
     end
     
-
     def products_to_buy 
         if params[:search].present?
-            @products = Product.search_by_fields(params[:search])
+            @pagy, @products = pagy(Product.search_by_fields(params[:search]), items: 12)
             if params[:category].present?
                 @category = Category.find_by(name: params[:category])
-                @products = @products.where(category: @category)
+                @pagy, @products = pagy(@products.where(category: @category), items: 12)
             end
         else
-            @products = Product.all
+            @pagy, @products = pagy(Product.all, items: 12)
             if params[:category].present?
                 @category = Category.find_by(name: params[:category])
-                @products = @products.where(category: @category)
+                @pagy, @products = pagy(@products.where(category: @category), items: 12)
             end
         end
         @categories = Category.all
@@ -93,5 +97,17 @@ class ProductsController < ApplicationController
 
     def product_params
         params.require(:product).permit(:name, :description, :location, :price, :category_id, :supplier_id, :image)
+    end
+
+    def check_if_user_is_personal
+        unless current_user && current_user.personal?
+            redirect_to root_path
+        end
+    end
+
+    def check_if_user_is_buyer
+        unless current_user && !current_user.personal?
+            redirect_to root_path
+        end
     end
 end

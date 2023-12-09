@@ -67,6 +67,11 @@
                 <%end%>
             </tbody>
         </table>
+        <nav id="paginacionNav">
+            <ul class="pagination">
+                <%== pagy_nav(@pagy) %>
+            </ul>
+        </nav>
     <% else %>
         <div style="width: 100%; display: flex; justify-content: center; align-items: center">
             <p style="font-size: 2rem;">No existe ningún resultado que coincida con la busqueda</p>

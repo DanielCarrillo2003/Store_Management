@@ -9,6 +9,6 @@ class RotationsController < ApplicationController
         rotation = Rotation.find(params[:id])
         rotation.update(completed: true, completed_at: Time.now, username: current_user.username)
         Product.rotate(rotation.username)
-        redirect_to rotations_path, notice: 'Rotación completada'
+        redirect_to root_path, notice: 'Rotación completada, tu nombre será guardado en el historial'
     end
 end

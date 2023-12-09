@@ -1,9 +1,13 @@
 class SuppliersController < ApplicationController
+    before_action :authenticate_user!
+    before_action :check_if_user_is_personal
+
+
     def index 
         if params[:search].present?
-            @suppliers = Supplier.search_by_fields(params[:search])
+            @pagy, @suppliers = pagy(Supplier.search_by_fields(params[:search]), items: 10)
         else
-            @suppliers = Supplier.all
+            @pagy, @suppliers = pagy(Supplier.all, items: 10)
         end
     end
 
@@ -50,17 +54,14 @@ class SuppliersController < ApplicationController
     end
 
     def get_movements
-        @movements = if params[:search].present?
-            Movement.search_by_fields(params[:search])
+        @pagy, @movements = if params[:search].present?
+            pagy(Movement.search_by_fields(params[:search]), items: 20)
         else
-            Movement.all
+            pagy(Movement.all, items: 20)
         end
         @movements = @movements.where("year = ?", params[:year]) if params[:year].present?
     end
     
-    
-
-
     def destroy
         @supplier = Supplier.find(params[:id])
         begin
@@ -77,5 +78,11 @@ class SuppliersController < ApplicationController
 
     def supplier_params
         params.require(:supplier).permit(:name, :firstname,:phone_number,:enterprise)
+    end
+
+    def check_if_user_is_personal
+        unless current_user && current_user.personal?
+            redirect_to root_path
+        end
     end
 end 

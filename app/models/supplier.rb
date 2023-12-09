@@ -9,6 +9,12 @@ class Supplier < ApplicationRecord
     using: {
         tsearch: {prefix: true, any_word: true }
     }
+    validates :name, presence: true
+    validates :firstname, presence: true
+    validates :enterprise, presence: true
+    validates :phone_number, presence: true, length: {is: 10}
+
+
     def self.ransackable_attributes(auth_object = nil)
         ["id", "firstname", "name", "enterprise", "phone_nunber"]
     end

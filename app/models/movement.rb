@@ -10,6 +10,10 @@ class Movement < ApplicationRecord
         }
     }
 
+    def self.ransackable_attributes(auth_object = nil)
+        ["created_at", "day", "id", "month", "movement", "product_name", "quantity_affected", "updated_at", "year"]
+    end
+
     after_create :set_date_values
 
     private

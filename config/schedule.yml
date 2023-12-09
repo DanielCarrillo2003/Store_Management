@@ -1,11 +1,15 @@
+#PARA PRUEBAS DESCOMENTA ESTO Y COMENTA LO OTRO,
+#LO DE ABAJO VA A EJECUTAR LOS TRABAJOS EN COLA CADA 5 SEGUNDOS.
+
 # email_job:
 #   cron: "*/5 * * * * *"
 #   class: "WeeklyExpirationMailJob"
 # rotation_job:
-#   cron: "0 0 */3 * *"
+#   cron: "*/5 * * * * *"
 #   class: "RotationJob"
+
 email_job:
-  cron: "*/5 * * * * *"
+  cron: "0 0 * * 1"
   class: "WeeklyExpirationMailJob"
 rotation_job:
   cron: "0 0 */3 * *"

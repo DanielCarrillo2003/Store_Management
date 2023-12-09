@@ -1,19 +1,28 @@
+<style>
+  .bottom-alerts {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+</style>
+
 <% if notice %>
-  <div class="alert alert-success alert-dismissible fade show m-1" role="alert">
+  <div class="alert alert-success alert-dismissible fade show m-1 bottom-alerts" role="alert">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     <p style="font-weight: bold; font-size: 1.3rem"><%= notice %></p>
   </div>
 <% end %>
 
-<% if alert %>
-  <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
+<% if alert %> 
+  <div class="alert alert-warning alert-dismissible fade show m-1 bottom-alerts" role="alert">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       <p style="font-weight: bold; font-size: 1.3rem"><%= alert %></p>
   </div>
 <% end %>
 
 <% if flash.now[:error] %>
-  <div class="alert alert-danger alert-dismissible fade show m-1" role="alert">
+  <div class="alert alert-danger alert-dismissible fade show m-1 bottom-alerts" role="alert">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     <p style="font-weight: bold; font-size: 1.3rem"><%= flash.now[:error] %></p>
   </div>

@@ -1,6 +1,11 @@
-<h2>Products Expiring This Week</h2>
+<h2>Productos proximos a expirar</h2>
 <ul>
     <% @products.each do |product| %>
-        <li><%= product.name %> - Expiration Date: <%= product.expiration_date %></li>
+        <div style="margin: 10px">
+            <li>Nombre del producto: <span style="font-weight: bold"><%= product.name %></span></li>
+            <li>Fecha de caducidad: <span style="font-weight: bold"><%= product.expiration_date %></span></li>
+            <li>Número de lote: <span style="font-weight: bold"><%= product.lot_on_sale_number %></span></li>
+            <li>Fecha de registro del lote: <span style="font-weight: bold"><%= product.lot_on_sale_registration_date %></span></li>
+        </div>
     <% end %>
 </ul>

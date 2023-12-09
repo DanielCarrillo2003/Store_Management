@@ -37,8 +37,13 @@
             </div>
         <%end%>
     </div>
+    <nav id="paginacionNav" style="margin-bottom: 50px">
+        <ul class="pagination">
+            <%== pagy_nav(@pagy) %>
+        </ul>
+    </nav>
 <% else %>
-    <h2>No hay coincidencias con tu busqueda</h2>
+    <h2 style="margin-top: 50px">No hay coincidencias con tu busqueda</h2>
 <% end %>
 
 <script>

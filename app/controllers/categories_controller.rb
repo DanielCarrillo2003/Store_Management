@@ -1,9 +1,12 @@
 class CategoriesController < ApplicationController
+    before_action :authenticate_user!
+    before_action :check_if_user_is_personal
+
     def index 
         if params[:search].present?
-            @categories = Category.search_by_fields(params[:search])
+            @pagy, @categories = pagy(Category.search_by_fields(params[:search]), items: 10)
         else
-            @categories = Category.all
+            @pagy, @categories = pagy(Category.all, items: 10)
         end
     end
 
@@ -51,5 +54,11 @@ class CategoriesController < ApplicationController
 
     def category_params
         params.require(:category).permit(:name, :description)
+    end
+
+    def check_if_user_is_personal
+        unless current_user && current_user.personal?
+            redirect_to root_path
+        end
     end
 end

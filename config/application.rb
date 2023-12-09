@@ -41,7 +41,18 @@ module EcommerceAndStorage
     config.time_zone = "America/Mexico_City"
     
     # config.eager_load_paths << Rails.root.join("extras")
+    
+
+    #DESCOMENTA ESTO PARA ACTIVAR SIDEKIQ JOBS
+    #------------------------------------------------------------------------------------
+    #------------------------------------------------------------------------------------
+
     config.active_job.queue_adapter = :sidekiq
+
+    #------------------------------------------------------------------------------------
+    #------------------------------------------------------------------------------------
+
+
     config.action_mailer.default_url_options = { host: 'example.com' }
 
     config.action_mailer.delivery_method = :smtp 

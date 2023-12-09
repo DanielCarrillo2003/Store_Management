@@ -14,15 +14,21 @@
         
         <% if @user.personal %>
             <div> 
-                <h1 style="font-size: 6rem; margin-top: 50px" >Bienvenido <%=  @user.username %> </h1>
-                <h2>Area de almacen</h2> 
+                <h1 style="font-size: 6rem;" >Bienvenido <%=  @user.username %> </h1>
+                <h2 class="mb-4">Area de almacen</h2> 
                 <% if @rotation_pending %>
-                    <div class="rotation-banner">
-                        HOLA HAY UNA ROTACION PENDIENTE
+                    <div class="alert alert-primary" role="alert">
+                        <div class="row">
+                            <div class="col-9">
+                                <h3>Te informamos que hay una rotación pendiente</h3>
+                            </div>
+                            <div class="col-3 d-flex justify-content-end">
+                                <%= form_for @rotation_pending, url: rotation_path(@rotation_pending), method: :patch do |f| %>
+                                    <%= f.submit 'Realizar rotación', class: "btn btn-primary" %>
+                                <% end %>
+                            </div>
+                        </div>
                     </div>
-                    <%= form_for @rotation_pending, url: rotation_path(@rotation_pending), method: :patch do |f| %>
-                        <%= f.submit 'Completar Rotación' %>
-                    <% end %>
                 <% end %>
             </div>
         <%else%>

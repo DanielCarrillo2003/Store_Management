@@ -47,11 +47,15 @@ class Product < ApplicationRecord
         amount_on_sale = first_lot ? first_lot.amount : 0
         amount_in_stock = lots.sum(:amount) - amount_on_sale
         quantity_lots = lots.count - 1
+        lot_number = first_lot ? first_lot.id : nil
+        lot_regis_date = first_lot ? first_lot.created_at : nil
         lot_expiration_date = first_lot ? first_lot.expiration_date : nil
         update(
             on_sale: amount_on_sale,
             in_stock: amount_in_stock,
             lots_in_stock: quantity_lots,
+            lot_on_sale_number: lot_number,
+            lot_on_sale_registration_date: lot_regis_date,
             expiration_date: lot_expiration_date
         )
     end

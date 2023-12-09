@@ -13,11 +13,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
             respond_with resource
         end
     end 
-   
+
+
     private
 
     def permit_username_param
-        params.require(:user).permit(:username, :email, :password, :password_confirmation)  
+        params.require(:user).permit(:username, :phone_number, :rfc, :email, :password, :password_confirmation)  
     end
-    
+
 end

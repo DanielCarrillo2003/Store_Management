@@ -34,6 +34,11 @@ es:
               too_long: "es demasiado largo (máximo %{count} caracteres)"
             password:
               too_short: "es demasiado corta (mínimo %{count} caracteres)"
+              blank: "no puede estar en blanco"
+            password_confirmation:
+              confirmation: "no coincide con la confirmación"
+            phone_number:
+              wrong_length: "debe tener %{count} caracteres"
             email:
               taken: "ya está en uso"
         product:
@@ -77,6 +82,12 @@ es:
       supplier:
         one: "Proveedor"
         other: "Proveedores"
+      rotation:
+        one: "Historial de ratación"
+        other: "Historial de rotaciones"
+      movement:
+        one: "Historial de movimiento"
+        other: "Historial de movimientos"
     attributes:
       active_admin/comment:
         namespace: "Espacio de nombres"
@@ -97,6 +108,8 @@ es:
         email: "Correo"
         username: "Nombre de usuario"
         password: "Contraseña"
+        phone_number: "Celular"
+        rfc: "RFC"
         repeat_password: "Repetir contraseña"
         created_at: "Fecha de creación"
       admin_user:
@@ -110,6 +123,16 @@ es:
         firstname: "Apellido"
         phone_number: "Número de telefono"
         enterprise: "Empresa"
+      rotation:
+        username: "Realizado por"
+        scheduled_at: "Fecha de corte"
+        completed_at: "Fecha de activación"
+        completed: "Completado"
+      movement:
+        product_name: "Nombre del producto"
+        quantity_affected: "Cantidad afectada por el movimiento"
+        movement: "Tipo de movimiento"
+        created_at: "Realizado el"
   active_admin:
     time:
       formats:

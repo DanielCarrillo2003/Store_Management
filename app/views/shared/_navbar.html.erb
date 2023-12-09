@@ -1,19 +1,8 @@
 <style>
-.nav-link{
-  color: white;
-  border-radius: 5px;
-  margin: 0 10px;
-}
-.nav-link:hover{
-  background-color: white;
-}
-.nav-link:active{
-  background-color: white !important;
-  color: black !important;
-}
-
+  .nav-item{
+    margin: 10px;
+  }
 </style>
-
 <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #26251C !important" >
   <div class="container" id="navContainer">
     <%= link_to "/", class: "navbar-brand" do %>
@@ -24,44 +13,41 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <% if user_signed_in? %>
-            <% if current_user.personal %>
-              <li class="nav-item" >
-                <%= link_to "Productos", personal_products_path, class: "nav-link" %>
-              </li> 
-              <li class="nav-item" >
-                <%= link_to "Categorias", categories_path, class: "nav-link" %>
-              </li> 
-              <li class="nav-item" >
-                <%= link_to "Proveedores", suppliers_path, class: "nav-link" %>
-              </li> 
-              <li class="nav-item" >
-                <%= link_to "Movimientos de productos", get_products_movements_path, class: "nav-link" %>
-              </li>
-              <li class="nav-item" >
-                <a class="nav-link" href="#">Rotaciones</a>
-              </li>  
-            <%else%>
-              <li class="nav-item" >
-                <%= link_to "Productos", available_products_path, class: "nav-link" %>
-              </li>
-              <li class="nav-item" >
-                <%= link_to "Mis compras", sales_path, class: "nav-link" %>
-              </li>
-            <%end%>
-          <% end %>
+        <% if user_signed_in? %>
+          <% if current_user.personal %>
+            <li class="nav-item" >
+              <%= link_to "Productos", personal_products_path, class: "btn btn-outline-light" %>
+            </li> 
+            <li class="nav-item" >
+              <%= link_to "Categorias", categories_path, class: "btn btn-outline-light" %>
+            </li> 
+            <li class="nav-item" >
+              <%= link_to "Proveedores", suppliers_path, class: "btn btn-outline-light" %>
+            </li> 
+            <li class="nav-item" >
+              <%= link_to "Movimientos de productos", get_products_movements_path, class: "btn btn-outline-light" %>
+            </li>
+          <%else%>
+            <li class="nav-item" >
+              <%= link_to "Productos", available_products_path, class: "btn btn-outline-light" %>
+            </li>
+            <li class="nav-item" >
+              <%= link_to "Mis compras", sales_path, class: "btn btn-outline-light" %>
+            </li>
+          <%end%>
+        <% end %>
       </ul>
       <div class="d-flex" >
         <% if !user_signed_in? %>
-            <div style="padding: 5px 20px; border-radius: 5px">
-              <li class="nav-item" style="margin: 0 10px 0 0; list-style-type: none;">
-                  <%= link_to raw('Iniciar Sesión'), new_user_session_path, class: "nav-link".html_safe, style: "margin: 0px; padding: 8px;"%>
-              </li>
-            </div>
-        <% else %>
-            <li class="nav-item" style="margin: 0px; padding: 8px; list-style-type: none;">
-                <%= link_to raw('Cerrar Sesión'),  destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link".html_safe, style: "margin: 0px; padding: 8px"%>
+          <div style="padding: 5px 20px; border-radius: 5px">
+            <li class="nav-item" style="margin: 0 10px 0 0; list-style-type: none;">
+              <%= link_to raw('Iniciar Sesión'), new_user_session_path, class: "btn btn-outline-light".html_safe, style: "margin: 0px; padding: 8px;"%>
             </li>
+          </div>
+        <% else %>
+          <li class="nav-item" style="margin: 0px; padding: 8px; list-style-type: none;">
+            <%= link_to raw('Cerrar Sesión'),  destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-light".html_safe, style: "margin: 0px; padding: 8px"%>
+          </li>
         <% end %>
       </div>
     </div>
