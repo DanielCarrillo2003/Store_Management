@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_07_224534) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_09_015334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "plpgsql"
@@ -137,6 +137,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_07_224534) do
     t.date "expiration_date"
     t.index ["category_id"], name: "index_products_on_category_id"
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
+  end
+
+  create_table "rotations", force: :cascade do |t|
+    t.string "username"
+    t.datetime "scheduled_at"
+    t.datetime "completed_at"
+    t.boolean "completed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sale_items", force: :cascade do |t|

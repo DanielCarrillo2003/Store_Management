@@ -16,6 +16,14 @@
             <div> 
                 <h1 style="font-size: 6rem; margin-top: 50px" >Bienvenido <%=  @user.username %> </h1>
                 <h2>Area de almacen</h2> 
+                <% if @rotation_pending %>
+                    <div class="rotation-banner">
+                        HOLA HAY UNA ROTACION PENDIENTE
+                    </div>
+                    <%= form_for @rotation_pending, url: rotation_path(@rotation_pending), method: :patch do |f| %>
+                        <%= f.submit 'Completar Rotación' %>
+                    <% end %>
+                <% end %>
             </div>
         <%else%>
             <div> 

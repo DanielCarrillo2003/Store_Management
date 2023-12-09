@@ -34,4 +34,7 @@ Rails.application.routes.draw do
   resources :cart_items, only: [:create, :update, :destroy] do
     post 'checkout', on: :collection
   end
+
+  #RUTAS DE LAS ROTACIONES
+  resources :rotations, only: [:index, :create, :update]
 end

@@ -56,6 +56,25 @@ class Product < ApplicationRecord
         )
     end
 
+    def self.rotate(username)
+        products_to_rotate = where('on_sale = 0 OR expiration_date <= ?', 1.week.from_now)
+        products_to_rotate.each do |product|
+            lots_to_delete = product.lots.where('expiration_date <= ?', 1.week.from_now)
+            lots_to_delete.destroy_all if lots_to_delete.present?
+            next_lot = product.lots.order(:expiration_date).first
+            if next_lot
+                product.update(
+                on_sale: next_lot.amount,
+                in_stock: product.lots.sum(:amount) - next_lot.amount,
+                lots_in_stock: product.lots.count - 1,
+                expiration_date: next_lot.expiration_date
+                )
+            else
+                product.update(on_sale: 0, expiration_date: nil)
+            end
+        end
+    end
+
     def record_selling_movement(quantity)
         Movement.create(product_name: name, quantity_affected: quantity, movement: 'Venta')
     end

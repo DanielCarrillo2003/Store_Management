@@ -1,6 +1,12 @@
 # email_job:
 #   cron: "*/5 * * * * *"
 #   class: "WeeklyExpirationMailJob"
+# rotation_job:
+#   cron: "0 0 */3 * *"
+#   class: "RotationJob"
 email_job:
-  cron: "0 0 * * 1"
+  cron: "*/5 * * * * *"
   class: "WeeklyExpirationMailJob"
+rotation_job:
+  cron: "0 0 */3 * *"
+  class: "RotationJob"
