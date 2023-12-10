@@ -12,26 +12,22 @@
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
             <div class="form-inputs">
               <div class="text-center">
-                <div class="field">
-                  <%= f.label :username %><br />
-                  <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
+
+                <div class="field mb-3">
+                  <%= f.label :username, style: "margin-bottom: 5px;"%><br />
+                  <%= f.text_field :username, autofocus: true, autocomplete: "username", style: "padding: 5px; border-radius: 9px" %>
                 </div>
 
-                <div class="field">
-                  <%= f.label :password %><br />
-                  <%= f.password_field :password, autocomplete: "current-password" %>
+                <div class="field mb-3">
+                  <%= f.label :password, style: "margin-bottom: 5px;"%><br />
+                  <%= f.password_field :password, autocomplete: "current-password", style: "padding: 5px; border-radius: 9px" %>
                 </div>
-                <% if devise_mapping.rememberable? %>
-                  <div class="field">
-                    <%= f.check_box :remember_me %>
-                    <%= f.label :remember_me %>
-                  </div>
-                <% end %>
+
               </div>
             </div>
             <div class="buton-area text-center">
               <div class="actions">
-                <%= f.submit "Log in" %>
+                <%= f.submit "Iniciar sesión" %>
               </div>
             </div>
           <% end %>

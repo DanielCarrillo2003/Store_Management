@@ -1,37 +1,58 @@
-<h2>Registro</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<div class="container" id="LoginContainer" style='margin-top: 50px !important'>
+  <div class="row" id="LoginBox" style="margin-top: 130px; margin-bottom: 0px;">
+    <div class="col col-lg-6 col-md-4" id="imageCol">
+      <div class="image-container">
+        <%= image_tag("login.jpg", alt: "Cutting food", class: "cover-image", style: "height: 100%")%>
+      </div>
+    </div>
+    <div class="col col-lg-6 col-xs-12 col-sm-12 col-md-8">
+      <div class="loginForm">
+          <h2 id="LoginTitle">Registro de usuario</h2>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <div class="form-inputs">
+              <div class="text-center">
+                
+                <div class="field mb-2">
+                  <%= f.label :username, style: "margin-bottom: 5px;" %><br />
+                  <%= f.text_field :username, autofocus: true, autocomplete: "username", style: "padding: 5px; border-radius: 9px" %>
+                </div>
+
+                <div class="field mb-2">
+                  <%= f.label :phone_number, style: "margin-bottom: 5px;" %><br />
+                  <%= f.text_field :phone_number, autofocus: true, autocomplete: "phone_number", style: "padding: 5px; border-radius: 9px" %>
+                </div>
+
+                <div class="field mb-2">
+                  <%= f.label :email, style: "margin-bottom: 5px;" %><br />
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email", style: "padding: 5px; border-radius: 9px" %>
+                </div>
+
+                <div class="field mb-2">
+                  <%= f.label :password, style: "margin-bottom: 5px;" %>
+                  <em>(Minimo 8 caracteres)</em><br>
+                  <%= f.password_field :password, autocomplete: "new-password", style: "padding: 5px; border-radius: 9px" %>
+                </div>
+
+                <div class="field mb-2">
+                  <%= f.label :password_confirmation, "Confirmar contraseña", style: "margin-bottom: 5px;" %><br />
+                  <%= f.password_field :password_confirmation, autocomplete: "new-password", style: "padding: 5px; border-radius: 9px" %>
+                </div>
+
+              </div>
+            </div>
+            <div class="buton-area text-center">
+              <div class="actions">
+                <%= f.submit "Registrarme" %>
+              </div>
+            </div>
+          <% end %>
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<div>
   <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.text_field :phone_number, autofocus: true, autocomplete: "phone_number" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <em>(Minimo 8 caracteres)</em><br>
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirmar contraseña" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Registrarme" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
